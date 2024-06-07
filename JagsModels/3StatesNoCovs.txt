@@ -1,0 +1,49 @@
+
+model {
+# Priors
+  psi ~ dunif(0, 1)
+  r ~ dunif(0, 1)
+  p11 ~ dunif(0, 1)
+  # Multinomial logit link for observation model for state 3 (= pair)
+  lp21 ~ dnorm(0, 0.01)
+  lp22 ~ dnorm(0, 0.01)
+  p21 <- exp(lp21) / (1 + exp(lp21) + exp(lp22))
+  p22 <- exp(lp22) / (1 + exp(lp21) + exp(lp22))
+  
+
+  # Define initial state vector (Omega)
+  Omega[1] <- 1 - psi # Prob. of non-occupation
+  Omega[2] <- psi * (1-r) # Prob. of occupancy (w/ single bird)
+  Omega[3] <- psi * r # Prob. of occupancy (with pair)
+  # Define observation matrix (Theta)
+  # Order of indices: true state, observed state
+  Theta[1,1] <- 1
+  Theta[1,2] <- 0
+  Theta[1,3] <- 0
+  Theta[2,1] <- 1-p11
+  Theta[2,2] <- p11
+  Theta[2,3] <- 0
+  Theta[3,1] <- 1-p21-p22 #as per prior section
+  Theta[3,2] <- p21
+  Theta[3,3] <- p22
+  # State-space likelihood
+  # State equation: model of true states (z)
+  for (i in 1:nsites){
+    z[i] ~ dcat(Omega[])
+  }
+  # Observation equation
+  for (i in 1:nsites){
+    for (j in 1:nsurveys){
+      y[i,j] ~ dcat(Theta[z[i],])
+    }
+  }
+  # Derived quantities
+  for (i in 1:nsites){
+    occ1[i] <- equals(z[i], 1)
+    occ2[i] <- equals(z[i], 2)
+    occ3[i] <- equals(z[i], 3)
+  }
+  n.occ[1] <- sum(occ1[]) # Sites in state 1
+  n.occ[2] <- sum(occ2[]) # Sites in state 2
+  n.occ[3] <- sum(occ3[]) # Sites in state 3
+}
