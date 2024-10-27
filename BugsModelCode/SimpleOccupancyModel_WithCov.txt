@@ -1,0 +1,25 @@
+
+model {
+
+  # Priors
+  beta0psi ~ dunif(0, 1)       # Occupancy intercept on prob. scale
+  beta0 <- logit(beta0psi)     # Occupancy intercept
+  beta1 ~ dunif(-20, 20)       # Occupancy slope 
+  p ~ dunif(0, 1)
+  # Likelihood
+  for (i in 1:nsites) {
+    # True state model for the partially observed true state
+    z[i] ~ dbern(psi[i])      # True occupancy z at site i
+    logit(psi[i]) <- beta0 + beta1 * Covariate[i]
+    
+    #observationprocess
+    for (j in 1:nsurveys) { # Loop over replicate surveys
+      y[i,j] ~ dbern(z[i]*p)  # Observation model 
+    }
+  }
+
+  # Derived quantities
+  n.occ <- sum(z[])       # Number of occupied sites among sample of M
+  mean.psi <- mean(psi)
+  }
+

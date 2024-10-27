@@ -1,0 +1,13 @@
+
+model {
+  # Priors
+  psi ~ dunif(0, 1)
+  p ~ dunif(0, 1)
+  # Likelihood
+  for (i in 1:nsites) {    # Loop over sites
+    z[i] ~ dbern(psi)         # State model
+    for (j in 1:nsurveys) { # Loop over replicate surveys
+      y[i,j] ~ dbern(z[i]*p)  # Observation model 
+    }
+  }
+}
