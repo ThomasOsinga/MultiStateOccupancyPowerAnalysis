@@ -20,3 +20,4 @@ Contains three folders:
 - Running models: Code for running simulations of both basic and multi-state models, configured with identical seeds to replicate results as presented in the paper. "RunningMultistate" and "RunningBasic" are the files that should be engaged with to run simulations - "Simulation function" are functions called on by the Running files. 
 	- Rslurm: This is the code we used to run our revision models through a HPC (slurm). 
 
+#Old_Unused_Rfiles: Contains scripts used somewhere in the process but not used for any of items or data in the manuscript. Is kept here for organisational reason. Not for review. 

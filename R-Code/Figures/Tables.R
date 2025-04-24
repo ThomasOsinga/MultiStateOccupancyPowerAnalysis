@@ -1,11 +1,10 @@
 
-# Load libraries
-library(tidyr)
-library(knitr)  # For kable
-library(gt)     # For gt tables
-
-library(flextable)
-library(officer)
+for (pkg in c("tidyr", "knitr", "gt", "flextable", "officer", "tidyverse")) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    install.packages(pkg)
+  }
+  library(pkg, character.only = TRUE)
+}
 
 # Filter the data for specific parameters and model 10
 test <- Convergence[[1]] %>%
@@ -59,13 +58,9 @@ ft <- flextable(table_data)
     CI_Upper = "CI Upper",
     Truth = "Truth"
   ) %>%
-  # Adjust column widths to fit content
   autofit() %>%
-  # Make header text bold
   bold(part = "header") %>%
-  # Center-align text in all columns
   align(align = "center", part = "all") %>%
-  # Add borders for better readability
   border_outer(border = fp_border(color = "black", width = 1)) %>%
   border_inner_h(border = fp_border(color = "black", width = 0.5)) %>%
   border_inner_v(border = fp_border(color = "black", width = 0.5)))
@@ -76,7 +71,5 @@ doc <- read_docx()
 
 # Add the flextable to the document
 doc <- body_add_flextable(doc, ft)
-
-# Save the Word document
 print(doc, target = "Table_Figure2.docx")
 

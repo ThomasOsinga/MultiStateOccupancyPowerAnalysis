@@ -9,8 +9,9 @@
 # BugsModelCode and R-Code
 # setwd("~/Repository_detectionProbability")
 #################
-## WorkingDirectory = MultiStateOccupancyModelsPowerAnalysis - RepositoryFolder
-## This should work too: setwd(dirname(dirname(dirname(normalizePath(rstudioapi::getSourceEditorContext()$path)))))
+## WorkingDirectory = MultiStateOccupancyModelsPowerAnalysis-main - RepositoryFolder
+## This should work too: 
+setwd(dirname(dirname(dirname(normalizePath(rstudioapi::getSourceEditorContext()$path)))))
 ###############
 
 #### START CODE ####
