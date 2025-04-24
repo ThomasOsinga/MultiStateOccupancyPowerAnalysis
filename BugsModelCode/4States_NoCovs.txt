@@ -5,7 +5,7 @@ model {
   R1 ~  dunif(0, 1)       # Prob. of exactly 1 calf given occupation
   R2 ~  dunif(0, 1)       # Prob. of >2 calves given occupation and 1 calf
   
-  p11 ~ dunif(0, 1)       # Detection prob for sites with no calves
+  p1 ~ dunif(0, 1)       # Detection prob for sites with no calves
   lp21 ~ dnorm(0, 0.1) # Logit-transformed prob for detection as no calf, given 1 calf
   lp22 ~ dnorm(0, 0.1) # Logit-transformed prob for correct detection, given 1 calf
   lp31 ~ dnorm(0, 0.1) # Logit-transformed prob for detection as no calf, given >2 calves
