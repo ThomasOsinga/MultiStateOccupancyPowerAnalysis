@@ -32,7 +32,7 @@ useSeeds <- matrix(floor(runif(nrSessions*nrItersPerSession, min=0, max=1234567)
 ### which session
 sessionNR <- 1
 p <- c(0.001, 0.005, 0.01, 0.05, 0.1, 0.2, 0.3, 0.5, 0.7, 0.9); #DP Occupied
-psi_fixed = 0.1
+psi_fixed = 0.6
 beta0 = 3 #intercept
 beta1 = 2 #betacoefficient for occupancy vs 1 Covariate
 nsimulation <- 1 
