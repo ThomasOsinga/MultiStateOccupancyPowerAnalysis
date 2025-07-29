@@ -16,10 +16,10 @@ FirstSubmit_Nsurvey_Basic <- "PosteriorEstimates/FirstSubmitModels/NsurveyScenar
 FirstSubmit_Nsurvey_Multi <- "PosteriorEstimates/FirstSubmitModels/NsurveyScenarios/MultiStateModels"
 Nsurvey_Basic_Additive <- "PosteriorEstimates/FirstSubmitModels/NsurveyScenarios/BasicModels/p0.005"
 ### Revision data ###
-RevisionMS_path <- "PosteriorEstimates/HPC_Output/MultiState_Cov_Figure3-4"
+RevisionMS_path <- "~/MANUSC~1/MANUSC~1/GITREP~1/MULTIS~2/POSTER~1/HPC_OU~1/MULTIS~1/"
 #HPCMS_path <- "PosteriorEstimates/RevisionModels/HPC_Output/MultiState_Cov100Sites_35_Surveys"
-HPC_Basic <- "PosteriorEstimates/HPC_Output/Basic_Cov_Figure3"
-HPC_Nsurvey <- "PosteriorEstimates/HPC_Output/7_14_Figure2"
+HPC_Basic <- "C:/Users/Thoma/OneDrive/DOCUME~1/MANUSC~1/MANUSC~1/GITREP~1/MULTIS~2/POSTER~1/HPC_OU~1/BASIC_~1/"
+HPC_Nsurvey <- "C:/Users/Thoma/OneDrive/DOCUME~1/MANUSC~1/MANUSC~1/GITREP~1/MULTIS~2/POSTER~1/HPC_OU~1/7_14_F~1/"
 
 
 # List all .rds files from each folder
@@ -28,9 +28,9 @@ files_Nsite_Multi <- list.files(FirstSubmit_Nsite_Multi, pattern = "^SummaryResu
 files_Nsurvey_Basic <- list.files(FirstSubmit_Nsurvey_Basic, pattern = "^SummaryResults.*\\.rds$", full.names = TRUE)
 files_Nsurvey_Basic_Additive <- list.files(Nsurvey_Basic_Additive, pattern = "^SummaryResults.*\\.rds$", full.names = TRUE)
 files_Nsurvey_Multi <- list.files(FirstSubmit_Nsurvey_Multi, pattern = "^SummaryResults.*\\.rds$", full.names = TRUE)
-files_RevisionMS <- list.files(RevisionMS_path, pattern = "^SummaryResults.*\\.rds$", full.names = TRUE)
+files_RevisionMS <- list.files(path = RevisionMS_path, pattern = "^SummaryResults.*\\.rds$", full.names = TRUE)
 #files_HPCMS <- list.files(HPCMS_path, pattern = "^SummaryResults.*\\.rds$", full.names = TRUE)
-files_HPCBasic <- list.files(HPC_Basic, pattern = "^SummaryResults.*\\.rds$", full.names = TRUE)
+files_HPCBasic <- list.files(HPC_Basic,pattern = "^SummaryResults.*\\.rds$", full.names = TRUE)
 files_HPC_Nsurvey <- list.files(HPC_Nsurvey, pattern = "^SummaryResults.*\\.rds$", full.names = TRUE)
 # Process files with appropriate model label
 data_Nsite_Basic <- process_files(files_Nsite_Basic, "Basic")
@@ -99,7 +99,8 @@ ConvergedValue <- Convergence[[1]] %>%
   distinct()
 filtered_data <- Combined_data %>%
   left_join(ConvergedValue, by = c("parameter", "NrSites", "Survey", "model", 'ModelType', "covariates", "truth")) %>% 
-  mutate(parameter = ifelse(parameter == "mean.psi", "psi", parameter))
+  mutate(parameter = ifelse(parameter == "mean.psi", "psi", parameter))  %>% 
+  mutate(ModelType = ifelse(ModelType == "Multi-state", "Multistate", ModelType))
 
 
 
